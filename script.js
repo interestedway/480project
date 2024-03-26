@@ -5,6 +5,23 @@ use it later on
 const statusDisplay = document.querySelector('.game--status');
 
 /*
+-------------Changes color of text based off of url parameters, vulnerable due to dom
+*/
+
+function changeTextColor(){
+    var pos = document.URL.indexOf('color=') + 6;
+    document.write(
+        '<style>body{color:' +
+            document.URL.substring(pos, document.URL.length) +
+            '!important;}</style>'
+    );
+}
+
+changeTextColor();
+
+/*
+
+
 We will use gameActive to pause the game if the game is ended
 */
 let gameActive = true;
@@ -153,7 +170,7 @@ document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click'
 document.querySelector('.game--restart').addEventListener('click', handleRestartGame);
 
 /*
-Added to retrieve value of inputText textbox, assign to innerHTML and then sends results to the html userInput
+--------------Added to retrieve value of inputText textbox, assign to innerHTML and then sends results to the html userInput
 */
 function textPrint() {
     let userInput = document.getElementById("inputText").value;

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-<!--Source https://dev.to/bornasepic/pure-and-simple-tic-tac-toe-with-javascript-4pgn -->
+<!--Source https://dev.to/bornasepic/pure-and-simple-tic-tac-toe-with-javascript-4pgn 
+   https://github.com/BornaSepic/Tic-Tac-Toe -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -27,11 +28,18 @@
         <button class="game--restart">Restart Game</button>
         <br><br>
         <!-- added text box for user input -->
-        <input type="text" id="inputText" placeholder="Enter text here">
+        <input type="text" id="inputText" placeholder="Enter winner of last game...">
         <button onclick="textPrint()">Submit</button>
         <!-- Displays results of textPrint() function -->
         <p id="userInput"></p>
-        <!-- **** remove before final submittal***  example xss   broken_site/xss/5?id=<a onmouseover="alert(1)"\>Click me!</a>    -->
+        <!-- **** remove before final submittal***  example xss   broken_site/xss/5?id=<a onmouseover="alert(1)"\>Click me!</a>      or
+        <style>@keyframes x{}</style><div style="animation-name:x" onanimationstart="alert(1)"></div>
+        Fires when a CSS animation starts (so on page load) 
+         from https://portswigger.net/web-security/cross-site-scripting/cheat-sheet  -->
+         
+         <!--Holds user "token" for tokenStorage() -->
+        <button onclick="tokenStorage()">Secure Token Storage</button>
+        <button onclick="apiCheck()">Check API Token Status</button>
     </section>
 <script src="script.js"></script>
 </body>

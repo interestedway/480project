@@ -6,7 +6,8 @@ const statusDisplay = document.querySelector('.game--status');
 
 /*
 --Changes color of text based off of url parameters, vulnerable due to dom !important overrides CSS
---Source of function https://learn.snyk.io/lesson/dom-based-xss/
+--Source of function https://learn.snyk.io/lesson/dom-based-xss/   
+index.html?color=<style><script>alert(“Test”)</script>
 */
 
 function changeTextColor(){
@@ -19,6 +20,14 @@ function changeTextColor(){
 }
 
 changeTextColor();
+
+const aKey = 446853;
+let apiError = `API key is correct ${aKey}`;
+
+function apiCheck(){
+    throw new Error(apiError)
+}
+
 
 /*
 We will use gameActive to pause the game if the game is ended
@@ -84,7 +93,7 @@ const winningConditions = [
     [2, 4, 6]
 ];
 
-
+//Logic for winnningConditions
 function handleResultValidation() {
     let roundWon = false;
     for (let i = 0; i <= 7; i++) {
@@ -125,18 +134,19 @@ and that there are still moves to be played, so we continue by changing the curr
 }
 
 function handleCellClick(clickedCellEvent) {
+
     /*
     We will save the clicked html element in a variable for easier further use
     */    
     const clickedCell = clickedCellEvent.target;
+
     /*
     Grab the 'data-cell-index' attribute from clicked cell to identify where that cell is in our grid. 
     getAttribute will return a string value.  Will parse it to an 
     integer(number)
     */
-    const clickedCellIndex = parseInt(
-      clickedCell.getAttribute('data-cell-index')
-    );
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+
     /* 
     Next up we need to check whether the call has already been played, 
     or if the game is paused. If either of those is true we will simply ignore the click.
@@ -144,12 +154,14 @@ function handleCellClick(clickedCellEvent) {
     if (gameState[clickedCellIndex] !== "" || !gameActive) {
         return;
     }
+
     /* 
     If everything in order we will proceed 
     */    
     handleCellPlayed(clickedCell, clickedCellIndex);
     handleResultValidation();
 }
+
 
 //Resets game tracking variables 
 function handleRestartGame() {
@@ -168,10 +180,27 @@ restart button
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
 document.querySelector('.game--restart').addEventListener('click', handleRestartGame);
 
+//Array to hold inputText
+let matchHistory = [];
+
 /*
---Added to retrieve value of inputText textbox, assign to innerHTML and then sends results to the html userInput
+--Added to retrieve value of inputText textbox, send to array, keep last three results, assign to innerHTML and then sends results to the html userInput through DOM
 */
 function textPrint() {
     let userInput = document.getElementById("inputText").value;
-    document.getElementById("userInput").innerHTML = "Your text: " + userInput;
+
+    matchHistory.push(userInput);
+    if(matchHistory.length > 3){
+        matchHistory.shift();
+    }
+
+    document.getElementById("userInput").innerHTML = matchHistory.join("\r\n");
 }
+
+/*
+--Stores "token" in local storage, can be seen through dev tools in application tab
+*/
+function tokenStorage(){
+    localStorage.setItem('loginToken', '733TKEY');
+}
+

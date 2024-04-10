@@ -7,7 +7,6 @@ const statusDisplay = document.querySelector('.game--status');
 /*
 --Changes color of text based off of url parameters, vulnerable due to dom !important overrides CSS
 --Source of function https://learn.snyk.io/lesson/dom-based-xss/   
-index.html?color=<style><script>alert(“Test”)</script>
 */
 
 function changeTextColor(){
@@ -21,6 +20,9 @@ function changeTextColor(){
 
 changeTextColor();
 
+/*
+Leakable fake api key that can be leaked through an error message
+*/
 const aKey = 446853;
 let apiError = `API key is correct ${aKey}`;
 
